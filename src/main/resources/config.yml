@@ -9,6 +9,15 @@ settings:
   min-password-length: 4
   max-password-length: 32
 
+# Координаты, куда телепортируется игрок для авторизации
+auth-location:
+  world: "world"    # Имя мира (обычно "world")
+  x: 177.497
+  y: 69.0
+  z: -38.499
+  yaw: 0.0
+  pitch: 0.0
+
 messages:
   prefix: "&8[&b&lAvelium&8] "
   need-register: "&eЗарегистрируйтесь: &f/register <пароль> <пароль>"
