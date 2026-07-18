@@ -1,0 +1,24 @@
+name: AveliumGuard
+version: '1.0'
+main: net.avelium.aveliumguard.AveliumGuard
+api-version: '1.20'
+author: Avelium
+description: Плагин авторизации для сервера Avelium
+commands:
+  register:
+    description: Регистрация
+    aliases: [reg]
+  login:
+    description: Вход
+    aliases: [l]
+  changepassword:
+    description: Смена пароля
+    aliases: [changepw, cp]
+  unregister:
+    description: Удалить аккаунт (только админ)
+  guardreload:
+    description: Перезагрузить конфиг
+permissions:
+  aveliumguard.admin:
+    description: Админские команды
+    default: op
