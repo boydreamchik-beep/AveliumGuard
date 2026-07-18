@@ -1,0 +1,40 @@
+# ============================================
+#          AveliumGuard Configuration
+# ============================================
+
+settings:
+  login-timeout: 60
+  max-attempts: 3
+  auto-login-by-ip: true
+  min-password-length: 4
+  max-password-length: 32
+
+messages:
+  prefix: "&8[&b&lAvelium&8] "
+  need-register: "&eЗарегистрируйтесь: &f/register <пароль> <пароль>"
+  need-login: "&eВойдите в аккаунт: &f/login <пароль>"
+  register-success: "&aВы успешно зарегистрированы на &bAvelium&a!"
+  login-success: "&aДобро пожаловать на &bAvelium&a!"
+  wrong-password: "&cНеверный пароль! Попыток осталось: &e%attempts%"
+  password-mismatch: "&cПароли не совпадают!"
+  already-registered: "&cВы уже зарегистрированы! Используйте /login"
+  not-registered: "&cВы не зарегистрированы! Используйте /register"
+  already-logged-in: "&cВы уже вошли в аккаунт!"
+  password-too-short: "&cПароль слишком короткий! Минимум &e%min% &cсимволов"
+  password-too-long: "&cПароль слишком длинный! Максимум &e%max% &cсимволов"
+  kick-timeout: "&cВремя на вход истекло!"
+  kick-too-many-attempts: "&cСлишком много неверных попыток!"
+  auto-login: "&aАвтоматический вход выполнен!"
+  password-changed: "&aПароль успешно изменён!"
+  no-permission: "&cУ вас нет прав!"
+
+titles:
+  register:
+    title: "&b&lAVELIUM"
+    subtitle: "&fЗарегистрируйтесь: &e/register <пароль> <пароль>"
+  login:
+    title: "&b&lAVELIUM"
+    subtitle: "&fВойдите: &e/login <пароль>"
+  success:
+    title: "&a&lДОБРО ПОЖАЛОВАТЬ"
+    subtitle: "&7Приятной игры на &bAvelium&7!"
