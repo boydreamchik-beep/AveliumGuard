@@ -34,6 +34,7 @@ public class AveliumGuard extends JavaPlugin implements Listener {
     private final Set<UUID> loggedIn = new HashSet<>();
     private final Map<UUID, Integer> attempts = new HashMap<>();
     private final Map<UUID, Integer> loginTasks = new HashMap<>();
+    private final Map<UUID, Location> savedLocations = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -115,6 +116,32 @@ public class AveliumGuard extends JavaPlugin implements Listener {
         ));
     }
 
+    private Location getAuthLocation(Player p) {
+        World world = p.getWorld();
+        String worldName = getConfig().getString("auth-location.world", "");
+        if (!worldName.isEmpty() && Bukkit.getWorld(worldName) != null) {
+            world = Bukkit.getWorld(worldName);
+        }
+        double x = getConfig().getDouble("auth-location.x", 177.497);
+        double y = getConfig().getDouble("auth-location.y", 69.0);
+        double z = getConfig().getDouble("auth-location.z", -38.499);
+        float yaw = (float) getConfig().getDouble("auth-location.yaw", 0.0);
+        float pitch = (float) getConfig().getDouble("auth-location.pitch", 0.0);
+        return new Location(world, x, y, z, yaw, pitch);
+    }
+
+    private void teleportToAuth(Player p) {
+        savedLocations.put(p.getUniqueId(), p.getLocation().clone());
+        p.teleport(getAuthLocation(p));
+    }
+
+    private void teleportBack(Player p) {
+        Location saved = savedLocations.remove(p.getUniqueId());
+        if (saved != null) {
+            p.teleport(saved);
+        }
+    }
+
     private void startLoginTimer(Player p) {
         int timeout = getConfig().getInt("settings.login-timeout", 60);
         int taskId = new BukkitRunnable() {
@@ -149,6 +176,9 @@ public class AveliumGuard extends JavaPlugin implements Listener {
             }
         }
 
+        // Телепорт на auth-локацию
+        teleportToAuth(p);
+
         startLoginTimer(p);
 
         new BukkitRunnable() {
@@ -172,6 +202,7 @@ public class AveliumGuard extends JavaPlugin implements Listener {
         e.quitMessage(null);
         loggedIn.remove(p.getUniqueId());
         attempts.remove(p.getUniqueId());
+        savedLocations.remove(p.getUniqueId());
         cancelLoginTimer(p);
     }
 
@@ -331,6 +362,7 @@ public class AveliumGuard extends JavaPlugin implements Listener {
         cancelLoginTimer(p);
         p.sendMessage(msg("register-success"));
         showTitle(p, "success");
+        teleportBack(p);
     }
 
     private void handleLogin(Player p, String[] args) {
@@ -369,6 +401,7 @@ public class AveliumGuard extends JavaPlugin implements Listener {
         saveData();
         p.sendMessage(msg("login-success"));
         showTitle(p, "success");
+        teleportBack(p);
     }
 
     private void handleChangePassword(Player p, String[] args) {
